@@ -22,11 +22,10 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
-const DIV_MARGIN_SEPARATOR_LENGTH  = 25;
-const Logo = require('./logo.jpg');
-
-const PURCHASE_PROGRAM_WEB_ENDPOINT = ""
+import LupaTrainerRecommendation from './LupaTrainerRecommendation';
+import LupaProgramRecommendation from './LupaProgramRecommendation';
+import Home from './Home';
+import Search from './Search';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -37,7 +36,11 @@ function App() {
     <Elements stripe={stripePromise}>
       <Router>
       <Switch>
-        <Route path="/:programOwnerUUID/:programUUID/:purchaserUUID" component={LupaWeb} />
+        <Route path="/" component={Home} />
+        <Route path="/search" component={Search} />
+        <Route path="/checkout/:programOwnerUUID/:programUUID/:purchaserUUID" component={LupaWeb} />
+        <Route path="/trainers/:trainerUUID" component={LupaTrainerRecommendation} />
+        <Route path="/programs/:programUUID" component={LupaProgramRecommendation} />
         </Switch>
       </Router>
     </Elements>

@@ -1,2 +1,2 @@
-npm run-script-build
+npm run-script build
 firebase deploy --only hosting

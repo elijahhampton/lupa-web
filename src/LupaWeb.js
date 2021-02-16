@@ -11,7 +11,9 @@ import {
   Typography,
   Container,
   Divider,
-  CircularProgress
+  CircularProgress,
+  CardMedia,
+  Card
 } from '@material-ui/core';
 
 import Logo from './logo.jpg'
@@ -133,82 +135,87 @@ const renderWebView = () => {
     )
   } else {
     return (
-      <Container style={{width: size.width, height: size.height, backgroundColor: 'rgb(244, 247, 252)'}}>
-     <AppBar color="primary" style={{flexDirection: 'row', width: '100%', height: 40, backgroundColor: '#FFFFFF', justifyContent: 'flex-start', alignItems: 'center'}}>
-     <img src={Logo} alt="Logo" style={{padding: 5, width: 25, height: 25}} />
-     <Typography variant="h6" style={{color: 'black'}}>
-         Lupa Checkout
-     </Typography>
-     </AppBar>
-     <Box height={size.height / 2.5} >
-     <Box style={{padding: 10, marginTop: DIV_MARGIN_SEPARATOR_LENGTH}}>
-     <h2 style={{}}>
-       Confirm and Pay
+      <Container style={{display: 'flex', flex: 1, width: size.width, height: size.height}}>
+     <div style={{display: 'flex', paddingTop: DIV_MARGIN_SEPARATOR_LENGTH, flex: 1, flexDirection: 'column', justifyContent: 'space-between'}}>
+
+     <div style={{display: 'flex', flex: 3, flexDirection: 'column'}}>
+       <div>
+       <h2 style={{ paddingTop: DIV_MARGIN_SEPARATOR_LENGTH, paddingBottom: 5, margin: 0}}>
+       Checkout
      </h2>
-       <h5 id="programNameText">
-       Please make the payment, after you will have full access to this program from your dashbaord.
-       </h5>
-     </Box>
-       <Paper style={{padding: 5, paddingTop: 10, paddingBottom: 10}}>
-     <CardElement
- options={{
-   style: {
-     base: {
-       fontSize: '16px',
-       color: '#424770',
-       '::placeholder': {
-         color: '#aab7c4',
-       },
-     },
-     invalid: {
-       color: '#9e2146',
-     },
-   },
- }}
-/>
-</Paper>
-
-<Box display="flex" flexDirection="row" alignItems="center" style={{flexDirection: 'row'}}>
- <CheckBox color="#1089ff" checked={true} />
-<Typography style={{padding: 10}}>
-  Remember card information
-</Typography>
-</Box>
-</Box>
-
-
-<Box display="flex" flexDirection="column">
- <Typography align="center" style={{fontSize: 12}}>
-   You are purchasing {programData.program_name}.
- </Typography>
-</Box>
+     <h6 style={{padding: 0, margin: 0, color: '#AAAAAA'}}>
+       1 Item
+     </h6>
+       </div>
   
-  <Box display="flex" flexDirection="column" alignSelf="center" alignItems="center" position="absolute" bottom={0}>
-  <Typography align="center" style={{padding: 20}} variant="caption">
-  Before purchasing a program please read the Lupa Terms of Service.
- </Typography>
+      
+
+       <Divider style={{marginTop: 30, marginBottom: 30,}} />
+
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column',}}>
+          <Card raised>
+          <CardMedia el component="img" src={programData.program_image} style={{margin: 0, padding: 0, alignSelf: 'center', width: '100%'}} />
+          </Card>
+     
+
+        <div style={{ width: '100%', paddingTop: 10}}>
+          <h5 style={{padding: 0, margin: 0, paddingBottom: 5}}>
+            {programData.program_name}
+          </h5>
+          <h6 style={{fontSize: 12, padding: 0, margin: 0, fontWeight: '300', color: '#AAAAAA'}}>
+            {programData.program_description}
+          </h6>
+        </div>
+        </div>
+
+        <Divider style={{marginTop: 30, marginBottom: 10}} />
+
+        <div>
+        <h5 style={{padding: 0, margin: 0}}>
+            Total: {programData.program_price}
+          </h5>
+        </div>
+     </div>
+
+  
+
+
+<div style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'flex-start'}}>
+
+<h6 style={{fontSize: 10, color: 'black', padding: 0, margin: 0, fontWeight: '200', textAlign: 'left'}}>
+Before purchasing a program please read the Lupa Terms of Service.
+</h6>
+
+<h6 style={{fontSize: 10, color: 'black', padding: 0, margin: 0, fontWeight: '200', textAlign: 'left'}}>
+After purchasing, your program will be made available on your dashboard.
+</h6>
 
  <Button 
  onClick={handlePurchaseProgram}
  variant="contained" 
  style={{
    width: '80%', 
-   alignSelf: 'center', 
    backgroundColor: '#1089ff', 
-   padding: 10, 
    color: 'white',
    alignSelf: 'center',
-   marginBottom: 30
  }}>
-     Pay {programData.program_price}
+     Buy Now
  </Button>
-  </Box>
 
+</div>
+</div>
    </Container>
        )
     }
 }
   return renderWebView()
+}
+
+const styles = {
+  media: {
+    paddingTop: '56.25%', // 16:9,
+    marginTop:'30'
+  }
 }
 
 // Hook
