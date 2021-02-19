@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-
 import {
     InstantSearch,
     Hits,
@@ -25,112 +16,81 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
 
   import algoliasearch from 'algoliasearch';
-import SearchResult from './SearchResult';
-import search from './api/search'
-import CustomSearchBox from './common/SearchBar';
+import CustomSearchBox from './ui/common/SearchBar';
+import STATES from './common/States';
+import CERTIFICATIONS from './common/Certifications';
+import RATES from './common/Rates';
+import INTEREST from './common/Interest';
+import NavBar from './components/common/NavBar';
 
   const searchClient = algoliasearch('EGZO4IJMQL', '883fd25a4271423ab63d5cb5d5096f72');
 
-const Hit = ({ hit }) => {
+const Hit = ({ hit, state, certification, rate, interest }) => {
+    if (hit.isTrainer == false) {
+      return null;
+    }
+
     return (
-      <Paper elevation={3} class="hit-container" style={{padding: 10,  width: 230, height: 210}}>
-        <div class="d-flex flex-row align-items-center">
-        <Avatar src={hit.photo_url} />
+      <div class="hit-container" style={{width: 230, height: 210}}>
+        <div class="d-flex flex-column justify-content-start align-items-start">
+        <Avatar src={hit.photo_url} style={{width: 150, height: 150}} variant="rounded" className={classes.large} />
         <div>
-        <Typography>
+        <p className="hit-text">
           {hit.display_name}
-        </Typography>
-        <Typography>
+        </p>
+        <p className="hit-text">
           {hit.certification}
-        </Typography>
-        </div>
-        </div>
-
- 
-          <p>
-          {hit.bio}
-          </p>
-
-
-        <div>
+        </p>
+        <p id="hourly-payment-rate-text" className="hit-text text-decoration-underline">
+          ${hit.hourly_payment_rate} / hr
+        </p>
         <p>
-          {hit.bio}
-          </p>
+        {hit.bio}
+        </p>
         </div>
-
-        <div>
-        <p>
-          {hit.hourly_payment_rate}
-          </p>
+        <button type="button" class="btn btn-sm btn-outline-dark">Book {hit.display_name}</button>
         </div>
-      </Paper>
+      </div>
       )
 }
 
 function Search(props) {
     const classes = useStyles();
     const theme = useTheme();
-  
-  const [age, setAge] = React.useState('');
-  const [open, setOpen] = React.useState(false);
 
-  const [searchHits, setSearchHits] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [state, setState] = useState("");
+  const [certification, setCertification] = useState("");
+  const [rate, setRate] = useState(0);
+  const [interest, setInterest] = useState("");
 
-  const handleOnSearch = (query) => {
-   const results = search(query)
-   results.then(hit => {
-    console.log('cdsdfd: ' + hit)
-   })
+  const [age, setAge] = useState(0);
+  const [open, setOpen] = useState(false);
 
-  }
-    
-
-  const renderSearchResults = () => {
-      return searchHits.map(hit => {
-          return <SearchResult result={hit} resultType="USER" />
-      })
+  const handleOnChangeState = (e) => {
+    setState(e.target.value);
   }
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const handleOnChangeCertification = (e) => {
+    setCertification(e.target.value);
+  }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOnChangeRate = (e) => {
+    setRate(e.target.value);
+  }
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const handleOnChangeInterest = (e) => {
+    setInterest(e.target.value);
+  }
 
     return (
-        <div class="full">
-             <section class="title">
         <div class="container-fluid">
-          <nav class="navbar navbar-expand-lg navbar-dark">
-          <button type="button navbar-brand" class="btn btn-primary">Lupa</button>
- 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-         <li class="nav-item">
-         <button type="button" class="btn btn-primary">Contact</button>
-          </li>
-          <li class="nav-item">
-          <button type="button" class="btn btn-primary">Our Vision</button>
-          </li>
-          <li class="nav-item">
-          <button type="button" class="btn btn-primary" onClick={() => window.location.replace('localhost:3000/search')}>See trainers</button>
-          </li>
-      </ul> 
-    </div> 
-          </nav>
+          <NavBar />
+          <div className="main-page">
+          <section class="title">
+        <div class="container-fluid">
+      
         </div>
       </section>
 
@@ -150,42 +110,42 @@ function Search(props) {
         style={{width: 160, height: 60}}
          classes={classes.root}
           native
-          value={age}
-          onChange={handleChange}
-          label="Age"
+          value={state}
+          onChange={handleOnChangeState}
+          label="State"
           inputProps={{
-            name: 'age',
-            id: 'outlined-age-native-simple',
+            name: 'state',
+            id: 'outlined-state-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          {
+             STATES.map((state, index, arr) => {
+              return <option value={state}>{state}</option>
+            })
+          }
         </Select>
-        
       </FormControl>
 
       <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel htmlFor="outlined-age-native-simple">Certification</InputLabel>
+        <InputLabel htmlFor="outlined-age-native-simple">Certifications</InputLabel>
         <Select
         style={{width: 160, height: 60}}
          classes={classes.root}
           native
-          value={age}
-          onChange={handleChange}
-          label="Age"
+          value={certification}
+          onChange={handleOnChangeCertification}
+          label="Certification"
           inputProps={{
-            name: 'age',
-            id: 'outlined-age-native-simple',
+            name: 'certification',
+            id: 'outlined-certification-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          {
+            CERTIFICATIONS.map((state, index, arr) => {
+              return <option value={state}>{state}</option>
+            })
+          }
         </Select>
-        
       </FormControl>
 
       <FormControl variant="outlined" className={classes.formControl}>
@@ -194,32 +154,51 @@ function Search(props) {
         style={{width: 160, height: 60}}
          classes={classes.root}
           native
-          value={age}
-          onChange={handleChange}
-          label="Age"
+          value={rate}
+          onChange={handleOnChangeRate}
+          label="Rate"
           inputProps={{
-            name: 'age',
-            id: 'outlined-age-native-simple',
+            name: 'rate',
+            id: 'outlined-rate-native-simple',
           }}
         >
-          <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          {
+            RATES.map((state, index, arr) => {
+              return <option value={state}>{state}</option>
+            })
+          }
         </Select>
-        
+      </FormControl>
+
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel htmlFor="outlined-age-native-simple">Interest</InputLabel>
+        <Select
+        style={{width: 160, height: 60}}
+         classes={classes.root}
+          native
+          value={interest}
+          onChange={handleOnChangeInterest}
+          label="Interest"
+          inputProps={{
+            name: 'interest',
+            id: 'outlined-interest-native-simple',
+          }}
+        >
+          {
+            INTEREST.map((state, index, arr) => {
+              return <option value={state}>{state}</option>
+            })
+          }
+        </Select>
       </FormControl>
       </section>
 
-      <section id="search">
       <InstantSearch indexName="dev_USERS" searchClient={searchClient}>
           <CustomSearchBox />
           <Hits hitComponent={Hit} />
       </InstantSearch>
-    </section>
-
-    
-        </div>
+          </div>
+            </div>
     )
 }
 
@@ -263,6 +242,10 @@ const useStyles = makeStyles((theme) => ({
       playIcon: {
         height: 38,
         width: 38,
+      },
+      large: {
+        width: theme.spacing(20),
+        height: theme.spacing(20),
       },
   }));
   

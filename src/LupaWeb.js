@@ -80,29 +80,6 @@ function LupaWeb(props) {
   const handlePurchaseProgram = async (event) => {
     event.preventDefault();
 
-    /*if (!stripe || !element) {
-      alert('Stripe has not loaded')
-      //Stripe has not loaded yet.  Disable form submission until stripe has loaded.
-      return;
-    }
-
-    const cardElement = document.getElement(CardElement);
-
-    // Use your card Element with other Stripe.js APIs
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-    });
-
-    if (error) {
-      console.log('[error]', error);
-    } else {
-      console.log('[PaymentMethod]', paymentMethod);
-
-      //axios request
-     
-  }*/
-
   const {programUUID, purchaserUUID} = props.match.params;
 
   axios({

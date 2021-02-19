@@ -2,18 +2,26 @@
   text-align: center;
   margin: 0 !important;
   padding: 0 !important;
+  height: 100vh;
+  width: 100vw;
   background-color: #FFFFFF;
 }
 
 html, body, #root, .App {
   height: 100vh;
   width: 100vw;
+  margin: 0 !important;
+  padding: 0 !important;
   background-color: #FFFFFF;
 }
 
 .full {
   width: 100vw;
   height: 100vh;
+}
+
+.main-page {
+  padding: 0% 5%;
 }
 
 body {
@@ -147,15 +155,26 @@ padding: 5%;
   padding: 5px;
 }
 
+.ais-Hits {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
 .ais-Hits-list {
   flex-direction: row;
   display: flex;
   flex-wrap: wrap;
   align-self: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 .ais-Hits-item {
-  margin: 10px;
+  margin: 0px;
+  list-style-type: none;
+
 }
 
 .ais-InstantSearch {
@@ -175,17 +194,27 @@ padding: 5%;
 
 /* Algolia Hit */
 .hit-container {
-  margin: 20px;
+
+}
+
+.hit-text {
+  font-weight: 400;
+  margin: 0px 0px;
+}
+
+#hourly-payment-rate-text {
+  color: #AAAAAA;
+  font-style: u;
 }
 
 /* General Search Page */
 #search-text {
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: #AAAAAA;
 }
 
 #search-category-text {
-  font-style: 2.5em;
+  font-size: 2.5em;
   font-weight: bold;
 }
 
@@ -231,15 +260,15 @@ h6 {
 }
 
 #search {
-  padding: 1% 4.5%;
+
 }
 
 #search-controls {
-  padding: 1% 4.5%;
+  padding: 1% 0%;
 }
 
 #informational-text {
-  padding: 1% 4.5%;
+  padding: 2% 0%;
 }
 
 .select {
