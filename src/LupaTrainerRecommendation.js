@@ -12,7 +12,7 @@ function LupaTrainerRecommendation(props) {
   }, [props.match.params.trainerUUID]);
 
   return (
-      <div style={{width: '100%', height: '100%', backgroundColor: 'red'}}>
+      <div style={{width: '100%', height: '100%', backgroundColor: '#23374d'}}>
           <script>
              {window.location.replace(`lupahealth://trainers/${props.match.params.trainerUUID}`)}
           </script>

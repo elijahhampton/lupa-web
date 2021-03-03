@@ -13,7 +13,7 @@ function LupaProgramRecommendation(props) {
   }, [props.match.params.programUUID]);
 
   return (
-      <div style={{width: '100%', height: '100%', backgroundColor: 'red'}}>
+      <div style={{width: '100%', height: '100%', backgroundColor: '#23374d'}}>
           <script>
           {window.location.replace(`lupahealth://programs/${props.match.params.programUUID}`)}
           </script>

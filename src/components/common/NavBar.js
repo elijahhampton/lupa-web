@@ -18,8 +18,8 @@ const NavBar = () => {
 
           <li class="nav-item">
           <div class="d-flex flex-row align-items-center">
-<button type="button" class="btn btn-primary" onClick={() => history.push('/Search')}>See Trainers <span>          <MdCallMade size={20} /></span></button>
-<button type="button" class="btn btn-primary">Login <span>          <MdCallMade size={20} /></span></button>
+{/* <button type="button" class="btn btn-primary" onClick={() => history.push('/Search')}>See Trainers <span>          <MdCallMade size={20} /></span></button>
+<button type="button" class="btn btn-primary">Login <span>          <MdCallMade size={20} /></span></button> */}
 </div>
           </li>
       </ul> 

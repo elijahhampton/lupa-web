@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@firebase/app": "^0.6.13",
-    "@firebase/firestore": "^2.0.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -17,6 +15,7 @@
     "@testing-library/user-event": "^12.1.10",
     "algoliasearch": "^4.8.5",
     "axios": "^0.21.0",
+    "firebase": "^8.2.8",
     "fontsource-roboto": "^3.0.3",
     "material-ui-search-bar": "^1.0.0",
     "react": "^17.0.1",

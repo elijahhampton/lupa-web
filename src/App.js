@@ -36,8 +36,8 @@ function App() {
     <Elements stripe={stripePromise}>
       <Router>
       <Switch>
-        <Route path="/" component={Search} />
-        <Route path="/search" component={Search} />
+        <Route path="/" component={Home} />
+      {/*  <Route path="/search" component={Search} /> */}
         <Route path="/checkout/:programOwnerUUID/:programUUID/:purchaserUUID" component={LupaWeb} />
         <Route path="/trainers/:trainerUUID" component={LupaTrainerRecommendation} />
         <Route path="/programs/:programUUID" component={LupaProgramRecommendation} />

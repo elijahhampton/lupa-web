@@ -107,7 +107,7 @@ const renderWebView = () => {
   if (componentReady == false) {
     return (
       <Container style={{width: size.width, height: size.height, alignItems: 'center', justifyContent: 'center'}}>
-        <CircularProgress color="blue" />
+        <CircularProgress color="#23374d" />
       </Container>
     )
   } else {
@@ -131,7 +131,7 @@ const renderWebView = () => {
 
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column',}}>
           <Card raised>
-          <CardMedia el component="img" src={programData.program_image} style={{margin: 0, padding: 0, alignSelf: 'center', width: '100%'}} />
+          <CardMedia component="img" src={programData.program_image} style={{margin: 0, padding: 0, alignSelf: 'center', width: '100%'}} />
           </Card>
      
 
