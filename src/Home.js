@@ -46,7 +46,7 @@ function Home(props) {
             <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center text-align-left">
              
               <p class="w-75 fw-light">
-                Stop wasting money on gym subscriptions.  Find the personal trainers instantly at effective rates.
+                Stop wasting money on gym subscriptions.  Find the personal trainers instantly in the gym or at home.
               </p>     
             </div>
 
@@ -55,7 +55,7 @@ function Home(props) {
             </div>
 
             <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
-                <button type="button" class="btn btn-dark download-button d-flex flex-row align-items-center">
+                <button onClick={() => window.location.replace('https://apps.apple.com/us/app/lupa-find-personal-trainers/id1510062386')} type="button" class="btn btn-dark download-button d-flex flex-row align-items-center">
                   <FaApple size={20} style={{marginRight: '10'}} />
                   Download it for iOS
                   </button>

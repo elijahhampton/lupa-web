@@ -1,6 +1,7 @@
 import './App.css';
 
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import {
   Button, 
@@ -39,11 +40,12 @@ function LupaWeb(props) {
   const [purchaserData, setPurchaserData] = useState({})
 
   const LOAD_PROGRAM_DATA_ENDPOINT = "https://us-central1-lupa-cd0e3.cloudfunctions.net/retrieveProgramDataForPurchase";
+  const {programOwnerUUID, programUUID, purchaserUUID } = useParams();
 
   useEffect(() => {
-
+    console.log(props)
     async function loadProgramData() {
-      const {programOwnerUUID, programUUID, purchaserUUID } = props.match.params;
+     
       await axios({
         headers: {
             Accept: 'application/json',
@@ -75,12 +77,10 @@ function LupaWeb(props) {
     }
 
     loadProgramData()
-  }, [props.match.params.programUUID]);
+  }, [programUUID]);
 
   const handlePurchaseProgram = async (event) => {
     event.preventDefault();
-
-  const {programUUID, purchaserUUID} = props.match.params;
 
   axios({
     headers: {

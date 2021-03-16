@@ -19,6 +19,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import {
   BrowserRouter as Router,
   Switch,
+  withRouter,
   Route,
   Link
 } from "react-router-dom";
@@ -36,13 +37,21 @@ function App() {
     <Elements stripe={stripePromise}>
       <Router>
       <Switch>
-        <Route path="/" component={Home} />
+        <Route exact path="/">
+          <Home />
+        </Route>
       {/*  <Route path="/search" component={Search} /> */}
-        <Route path="/checkout/:programOwnerUUID/:programUUID/:purchaserUUID" component={LupaWeb} />
-        <Route path="/trainers/:trainerUUID" component={LupaTrainerRecommendation} />
-        <Route path="/programs/:programUUID" component={LupaProgramRecommendation} />
+        <Route exact path="/checkout/:programOwnerUUID/:programUUID/:purchaserUUID">
+          <LupaWeb />
+        </Route>
+        <Route  exact path="/trainers/:trainerUUID">
+          <LupaTrainerRecommendation />
+        </Route>
+        <Route exact path="/programs/:programUUID">
+          <LupaProgramRecommendation />
+        </Route>
         </Switch>
-      </Router>
+        </Router>
     </Elements>
   );
 }
