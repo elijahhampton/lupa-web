@@ -7,7 +7,6 @@ import 'fontsource-roboto';
 
 import firebase from '@firebase/app';
 import '@firebase/firestore';
-import { FirestoreProvider } from 'react-firestore';
 
 const config = {
   apiKey: "AIzaSyAPrxdNkncexkRazrgGy4FY6Nd-9ghZVWE",
@@ -18,9 +17,7 @@ firebase.initializeApp(config);
 
 ReactDOM.render(
   <React.StrictMode>
-    <FirestoreProvider firebase={firebase}>
     <App />
-    </FirestoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,0 +1,88 @@
+.home-page {
+    
+}
+
+.full-page {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.section-header-text {
+    font-weight: 300;
+    color: #23374d;
+    font-size: 30px;
+}
+
+.section {
+    padding: 3% 5%;
+}
+
+#offers-section {
+    background-color: white;
+    color: #23374d;
+    text-align: center;
+}
+
+.offer-icon {
+    width: 100px;
+    height: 100px;
+    margin: 8px 0;
+}
+
+.offer-description-text {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.offer-description-container {
+    width: 80%;
+}
+
+#packs-image {
+    width: 50vw;
+    height: 100%;
+}
+
+.footer {
+    background-color: #fafafa;
+    padding: 0px 20px;
+}
+
+.footer-text {
+    font-size: 13px;
+    color: #aaaaaa;
+    font-weight: 500;
+}
+
+.meet-me-trainer-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.meet-me-avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 65px;
+}
+
+.meet-me-trainer-display-name-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #212121;
+    padding: 10px 0px;
+}
+
+.meet-me-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 65px;
+    background-color: white;
+    border-color: #eee;
+}
