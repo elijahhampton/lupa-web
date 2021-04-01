@@ -18,7 +18,7 @@ import FitnessProgramsDisplay from '../../assets/images/fitness-programs-display
 import PacksInformation from '../../components/PacksInformation/PacksInformation';
 import ProgramInformation from '../../components/ProgramInformation/ProgramInformation';
 
-import DB from '../../firebase/firebase';
+import firebase from '../../firebase/firebase';
 
 const Home = () => {
   const history = useHistory();
@@ -27,7 +27,7 @@ const Home = () => {
   useEffect(() => {
     async function loadMeetMeTrainers() {
       setMeetMeTrainers([])
-      DB.collection('users').where('account_type', '==', 'trainer').limit(10).get().then(querySnapshot => {
+      firebase.firestore().collection('users').where('account_type', '==', 'trainer').limit(10).get().then(querySnapshot => {
         querySnapshot.docs.forEach(documentSnapshot => {
           const userData = documentSnapshot.data();
           if (userData && userData.display_name) {
@@ -73,13 +73,13 @@ const Home = () => {
           </div>
 
           <div class="col-lg-4 d-flex flex-column align-items-center justify-content-center">
-            <button onClick={() => window.location.replace('https://apps.apple.com/us/app/lupa-find-personal-trainers/id1510062386')} type="button" class="btn btn-dark download-button d-flex flex-row align-items-center">
+            <button onClick={() => window.location.replace('https://apps.apple.com/us/app/lupa-find-personal-trainers/id1510062386')} type="button" class="btn download-button d-flex flex-row align-items-center">
               <FaApple size={20} style={{ marginRight: '10' }} />
-                  Download it for iOS
+                  Download for iOS
                   </button>
             <button type="button" id="android-button" class="disabled btn btn-light border download-button">
               <FaAndroid size={20} style={{ marginRight: '10' }} />
-                  Coming soon to Android
+                  Coming Soon to Android
                   </button>
           </div>
         </div>

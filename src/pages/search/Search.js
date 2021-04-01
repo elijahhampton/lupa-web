@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from "react-hook-form";
+import DateTimePicker from 'react-datetime-picker'
+import moment from 'moment';
 
 import {
   InstantSearch,
+  SearchBox,
   Hits,
+  connectHits
 } from 'react-instantsearch-dom';
 
 import {
@@ -10,22 +15,121 @@ import {
 } from '@material-ui/core'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
 import algoliasearch from 'algoliasearch';
-import CustomSearchBox from '../../components/search-bar/SearchBar';
-import STATES from '../../common/States';
-import CERTIFICATIONS from '../../common/Certifications';
-import RATES from '../../common/Rates';
-import INTEREST from '../../common/Interest';
-import NavBar from '../../components/navbar/NavBar';
+
+import Modal from 'react-modal';
+import { booking, extractDateStringFromFormattedMoment, createBookingRequest } from '../../lupa/booking';
+import firebase from '../../firebase/firebase';
+import ContainedButton from '../../components/contained-button/ContainedButton';
+
+import { Sentry } from 'react-activity';
+import 'react-activity/dist/react-activity.css';
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',
+    display: 'flex',
+    width: '55%',
+    height: 380,
+    padding: 20,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  }
+};
+ 
 
 const searchClient = algoliasearch('EGZO4IJMQL', '883fd25a4271423ab63d5cb5d5096f72');
 
-const Hit = ({ hit, state, certification, rate, interest }) => {
+const BookingModal = ({ trainerData, isVisible, closeModal }) => {
+  const { register, handleSubmit, watch, errors } = useForm();
+  const [dateValue, onChangeDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async data => {
+    let bookingData = booking;
+    bookingData['start_time'] = moment(new Date(dateValue)).format().toString()
+    bookingData['end_time'] = moment(new Date(dateValue)).add(1, 'hour').format().toString()
+    bookingData['date'] = extractDateStringFromFormattedMoment(moment(dateValue).format().toString())
+    bookingData['session_type'] = document.getElementById('sessionType').value;
+    bookingData['date_requested'] = new Date();
+    bookingData['uid'] = Math.random().toString();
+    bookingData['trainer_uuid'] = trainerData.user_uuid;
+    bookingData['requester_uuid'] = firebase.auth().currentUser.uid;
+
+    setLoading(true);
+    await createBookingRequest(bookingData)
+    .then(() => {
+      closeModal();
+    })
+    .catch(error => {
+      closeModal();
+      alert(error)
+    })
+
+    setLoading(false);
+  }
+
+  return (
+    <Modal
+    isOpen={isVisible}
+    onRequestClose={closeModal}
+    style={customStyles}
+    contentLabel="Example Modal"
+  >
+    {
+      loading ?
+      <div>
+        <Sentry />
+      </div>
+      :
+      <>
+       <h2 className='text-center'>You are ready to book a session with {trainerData.display_name}.</h2>
+     <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-column align-items-center'>
+    {/* register your input into the hook by invoking the "register" function */}
+    <div className='d-flex flex-column align-items-center my-2'>
+    <label>Session Type</label>
+    <select name="sessionType" id='sessionType' ref={register}>
+        <option value="in_person">In Person</option>
+        <option value="remote">Virtual</option>
+      </select>
+    </div>
+
+    <div className='d-flex flex-column align-items-center my-2'>
+    <label>Session Date/Time</label>
+    <DateTimePicker
+        onChange={onChangeDate}
+        value={dateValue}
+      />
+    </div>
+    
+    </form>
+
+    <div className='my-3 d-flex flex-row align-items-center justify-content-evenly w-100'>
+    <ContainedButton onClick={onSubmit}>
+      Book Trainer
+    </ContainedButton>
+    <ContainedButton inverted onClick={closeModal}>
+      Cancel
+    </ContainedButton>
+    </div>
+    </>
+ 
+    }
+
+   
+
+    
+  </Modal>
+  )
+}
+
+const Hit = ({ hit, handleOnSelectBookTrainer }) => {
   if (hit.isTrainer == false) {
     return null;
   }
@@ -48,43 +152,25 @@ const Hit = ({ hit, state, certification, rate, interest }) => {
             {hit.bio}
           </p>
         </div>
-        <button type="button" class="btn btn-sm btn-outline-dark">Book {hit.display_name}</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" onClick={handleOnSelectBookTrainer}>Book {hit.display_name}</button>
       </div>
     </div>
   )
 }
 
 function Search(props) {
-  const classes = useStyles();
+  const [bookingModalVisible, setBookingModalVisible] = useState(false);
+  const [selectedTrainer, setSelectedTrainer] = useState({ user_uuid: -1 });
 
-  const [state, setState] = useState("");
-  const [certification, setCertification] = useState("");
-  const [rate, setRate] = useState(0);
-  const [interest, setInterest] = useState("");
-
-  const handleOnChangeState = (e) => {
-    const { value } = e.target;
-    setState(value);
-  }
-
-  const handleOnChangeCertification = (e) => {
-    const { value } = e.target;
-    setCertification(value);
-  }
-
-  const handleOnChangeRate = (e) => {
-    const { value } = e.target;
-    setRate(value);
-  }
-
-  const handleOnChangeInterest = (e) => {
-    const { value } = e.target;
-    setInterest(value);
+  const handleOnSelectBookTrainer = async (trainer) => {
+    if (trainer) {
+      await setSelectedTrainer(trainer);
+      setBookingModalVisible(true)
+    }
   }
 
   return (
     <div class="container-fluid">
-      <NavBar />
       <div className="main-page">
         <section class="title">
           <div class="container-fluid" />
@@ -99,101 +185,14 @@ function Search(props) {
           </h4>
         </section>
 
-        <section id="search-controls" class="d-flex flex-row align-items-center">
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel htmlFor="outlined-age-native-simple">State</InputLabel>
-            <Select
-              style={{ width: 160, height: 60 }}
-              classes={classes.root}
-              native
-              value={state}
-              onChange={handleOnChangeState}
-              label="State"
-              inputProps={{
-                name: 'state',
-                id: 'outlined-state-native-simple',
-              }}
-            >
-              {
-                STATES.map((state, index, arr) => {
-                  return <option value={state}>{state}</option>
-                })
-              }
-            </Select>
-          </FormControl>
-
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel htmlFor="outlined-age-native-simple">Certifications</InputLabel>
-            <Select
-              style={{ width: 160, height: 60 }}
-              classes={classes.root}
-              native
-              value={certification}
-              onChange={handleOnChangeCertification}
-              label="Certification"
-              inputProps={{
-                name: 'certification',
-                id: 'outlined-certification-native-simple',
-              }}
-            >
-              {
-                CERTIFICATIONS.map((state, index, arr) => {
-                  return <option value={state}>{state}</option>
-                })
-              }
-            </Select>
-          </FormControl>
-
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel htmlFor="outlined-age-native-simple">Rate</InputLabel>
-            <Select
-              style={{ width: 160, height: 60 }}
-              classes={classes.root}
-              native
-              value={rate}
-              onChange={handleOnChangeRate}
-              label="Rate"
-              inputProps={{
-                name: 'rate',
-                id: 'outlined-rate-native-simple',
-              }}
-            >
-              {
-                RATES.map((state, index, arr) => {
-                  return <option value={state}>{state}</option>
-                })
-              }
-            </Select>
-          </FormControl>
-
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel htmlFor="outlined-age-native-simple">Interest</InputLabel>
-            <Select
-              style={{ width: 160, height: 60 }}
-              classes={classes.root}
-              native
-              value={interest}
-              onChange={handleOnChangeInterest}
-              label="Interest"
-              inputProps={{
-                name: 'interest',
-                id: 'outlined-interest-native-simple',
-              }}
-            >
-              {
-                INTEREST.map((state, index, arr) => {
-                  return <option value={state}>{state}</option>
-                })
-              }
-            </Select>
-          </FormControl>
-        </section>
-
         <InstantSearch indexName="dev_USERS" searchClient={searchClient}>
-          <CustomSearchBox />
-          <Hits hitComponent={Hit} />
+          <SearchBox />
+          <Hits  hitComponent={({ hit }) => (
+              <Hit hit={hit} handleOnSelectBookTrainer={() => handleOnSelectBookTrainer(hit)} />
+          )} />
         </InstantSearch>
       </div>
+      <BookingModal isVisible={bookingModalVisible} closeModal={() => setBookingModalVisible(false)} trainerData={selectedTrainer} />
     </div>
   )
 }

@@ -4,8 +4,11 @@ import SearchBar from "material-ui-search-bar";
 import { connectSearchBox } from 'react-instantsearch-dom';
 
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
-  const handleOnChange = (e, text) => {
-    refine(text);
+  const handleOnChange = (e) => {
+    e.preventDefault();
+
+    const value = e.target.value;
+    refine(value);
   }
 
   return (

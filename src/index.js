@@ -4,20 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'fontsource-roboto';
-
-import firebase from '@firebase/app';
-import '@firebase/firestore';
-
-const config = {
-  apiKey: "AIzaSyAPrxdNkncexkRazrgGy4FY6Nd-9ghZVWE",
-  projectId: "lupa-cd0e3",
-};
-
-firebase.initializeApp(config);
+import { Provider as ReduxProvider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import store from './redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReduxProvider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
