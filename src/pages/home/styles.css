@@ -30,7 +30,6 @@
 .offer-icon {
     width: 100px;
     height: 100px;
-    margin: 8px 0;
 }
 
 .offer-description-text {
@@ -38,8 +37,12 @@
     font-weight: 400;
 }
 
+.offering {
+    width: 25%;
+}
+
 .offer-description-container {
-    width: 80%;
+    width: 100%;
 }
 
 #packs-image {

@@ -26,6 +26,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import NavBar from './components/navbar/NavBar';
 import React from 'react';
+import TrainerProfile from './pages/TrainerProfile/TrainerProfile';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -73,6 +74,9 @@ class App extends React.Component {
         </Route>
         <Route exact path="/programs/:programUUID">
           <LupaProgramRecommendation />
+        </Route>
+        <Route exact path='/trainer/:id'>
+          <TrainerProfile />
         </Route>
         </Switch>
         </Router>

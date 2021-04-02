@@ -119,43 +119,34 @@ const Home = () => {
         <h2 className='section-header-text'>
           Why choose lupa?
           </h2>
-        <div className="d-flex flex-column flex-md-row justify-content-evenly w-100 mt-5">
-          <div className='d-flex flex-column align-items-center'>
-            <InPersonTraining className='offer-icon' />
+        <div className="d-flex flex-column flex-md-row justify-content-between w-100 mt-5">
+          <div className='d-flex flex-column align-items-center offering'>
+            <InPersonTraining className='offer-icon my-3' />
             <div className='offer-description-container'>
-              <h6> In Person Training </h6>
+              <h6> Book Lupa Sessions </h6>
               <p className='offer-description-text'>
-                Book trainers for in person workouts.  A faster experience connecting with your local personal trainer that automatically measures your progress.
+                Book trainers for in person or virtual workouts.  A faster experience connecting you with your local personal trainer that automatically measures your progress anywhere with phone.
                 </p>
             </div>
           </div>
 
-          <div className='d-flex flex-column align-items-center'>
-            <VirtualTraining className='offer-icon' />
+          <div className='d-flex flex-column align-items-center offering'>
+            <FitnessProgramsPlus className='offer-icon my-3' />
             <div className='offer-description-container'>
-              <h6> Virtual Training </h6>
+              <h6> Workout with Your Friends </h6>
               <p className='offer-description-text'>
-                Lupa provides live video training available anywhere you have a phone.
-                </p>
+                  Workout live under the same program with your closest friends.  Create a pack and start your own personal fitness community.
+              </p>
             </div>
           </div>
+          
 
-          <div className='d-flex flex-column align-items-center'>
-            <FitnessPrograms className='offer-icon' />
+          <div className='d-flex flex-column align-items-center offering'>
+            <FitnessPrograms className='offer-icon my-3' />
             <div className='offer-description-container'>
-              <h6> Fitness Programs </h6>
+              <h6> Buy Personalized Workout Programs </h6>
               <p className='offer-description-text'>
-                After a virtual consultation with an industry professional, have a custom made program made for you with full trainer support directly through the app.
-                </p>
-            </div>
-          </div>
-
-          <div className='d-flex flex-column align-items-center'>
-            <FitnessProgramsPlus className='offer-icon' />
-            <div className='offer-description-container'>
-              <h6> Fitness Programs + </h6>
-              <p className='offer-description-text'>
-                Through matching and curation from Lupa, clients may purchase workout prograams with durations from 2 weeks to 2 year periods to support their unique lifestyle.
+                Have a custom made program made for you or purchase workout programs with duration from 2 weeks to 2 years support your unique lifestyle.
                 </p>
             </div>
           </div>
