@@ -24,6 +24,7 @@ import ContainedButton from '../../components/contained-button/ContainedButton';
 
 import { Sentry } from 'react-activity';
 import 'react-activity/dist/react-activity.css';
+import { useHistory } from 'react-router';
 
 const customStyles = {
   content : {
@@ -152,7 +153,7 @@ const Hit = ({ hit, handleOnSelectBookTrainer }) => {
             {hit.bio}
           </p>
         </div>
-        <button type="button" class="btn btn-sm btn-outline-dark" onClick={handleOnSelectBookTrainer}>Book {hit.display_name}</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" onClick={handleOnSelectBookTrainer}>View {hit.display_name}</button>
       </div>
     </div>
   )
@@ -162,10 +163,13 @@ function Search(props) {
   const [bookingModalVisible, setBookingModalVisible] = useState(false);
   const [selectedTrainer, setSelectedTrainer] = useState({ user_uuid: -1 });
 
+  const history = useHistory();
+
   const handleOnSelectBookTrainer = async (trainer) => {
     if (trainer) {
-      await setSelectedTrainer(trainer);
-      setBookingModalVisible(true)
+      //await setSelectedTrainer(trainer);
+      //setBookingModalVisible(true)
+      history.push(`/trainer/${trainer.user_uuid}`)
     }
   }
 
